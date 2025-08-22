@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:convert';
 import '../lib/api/auth_api.dart';
+import '../lib/api/expense_api.dart';
 
 Future<void> main() async {
   // login
@@ -47,7 +48,6 @@ Future<Map<String, dynamic>> _login() async {
   }
 }
 
-
 void _printMenu(String username) {
   print("========= Expense Tracking App =========");
   print("Welcome $username");
@@ -62,6 +62,7 @@ void _printMenu(String username) {
 
 // Funtion mainloop
 Future<void> _mainLoop({required int userId, required String username}) async {
+  final api = ExpenseApi();
 
   while (true) {
     _printMenu(username);
@@ -75,29 +76,50 @@ Future<void> _mainLoop({required int userId, required String username}) async {
     switch (choice) {
       case '1':
         // Call function to show all expenses
-        
+        await _showAllExpenses(api, userId);
         break;
+
       case '2':
         // Call function to show today's expense
-        
+        await _showTodayExpense(api, userId);
         break;
+
       case '3':
         // Call function to search expense
-        
+        await _searchExpense(api, userId);
         break;
+
       case '4':
         // Call function to add new expense
-        
+        await _addNewExpense(api, userId);
         break;
+
       case '5':
         // Call function to delete an expense
-        
+        await _deleteExpense(api);
         break;
+
       case '6':
         print("----- Bye -------");
-        exit(0); 
+        exit(0);
+        
       default:
         print("Invalid choice. Please try again.");
     }
   }
 }
+
+// function to show all expenses
+Future<void> _showAllExpenses(ExpenseApi api, int userId) async {}
+
+// function to show today's expense
+Future<void> _showTodayExpense(ExpenseApi api, int userId) async {}
+
+// function to search expense
+Future<void> _searchExpense(ExpenseApi api, int userId) async {}
+
+// function to add new expense
+Future<void> _addNewExpense(ExpenseApi api, int userId) async {}
+
+// function to delete an expense
+Future<void> _deleteExpense(ExpenseApi api) async {}
