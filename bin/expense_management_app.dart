@@ -148,7 +148,40 @@ Future<void> _searchExpense(ExpenseApi api, int userId) async {
 }
 
 // function to add new expense
-Future<void> _addNewExpense(ExpenseApi api, int userId) async {}
+Future<void> _addNewExpense(ExpenseApi api, int userId) async {
+  print("==== Add new item ====");
+  // item
+  String? item;
+  do {
+    stdout.write("Item: ");
+    item = stdin.readLineSync();
+    if (item == null || item.trim().isEmpty) {
+      print("Item cannot be empty.");
+    }
+  } while (item == null || item.trim().isEmpty);
+  // paid
+  double? paid;
+  do {
+    stdout.write("Paid: ");
+    String? paidInput = stdin.readLineSync();
+    if (paidInput == null || paidInput.trim().isEmpty) {
+      print("Paid amount cannot be empty.");
+      continue;
+    }
+    paid = double.tryParse(paidInput);
+    if (paid == null) {
+      print("Invalid amount. Please enter a valid number.");
+    }
+  } while (paid == null);
+
+  // userId must be passed in from main loop
+  try {
+    await api.create(userId: userId, item: item, paid: paid);
+    print("Iserted!");
+  } catch (e) {
+    print("Failed to add expense: $e");
+  }
+}
 
 // function to delete an expense
 Future<void> _deleteExpense(ExpenseApi api, int userId) async {

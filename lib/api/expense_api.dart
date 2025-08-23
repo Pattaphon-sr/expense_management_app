@@ -18,6 +18,17 @@ class ExpenseApi {
     return res as List<dynamic>;
   }
   // 4) Add new expense create(userId, item, paid)
+  Future<void> create({
+    required int userId,
+    required String item,
+    required double paid,
+  }) async {
+    await httpc.requestJson(
+      '/api/expenses',
+      method: HttpMethod.post,
+      data: {'userId': userId, 'item': item, 'paid': paid},
+    );
+  }
 
   // 5) Delete expense by id remove(id)
   Future<void> remove(int id, int userId) async {
