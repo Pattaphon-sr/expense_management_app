@@ -4,7 +4,7 @@ class AuthApi {
   // add function login()
   Future<Map<String, dynamic>> login(String username, String password) async {
     final res = await postJson(
-      '/login',
+      '/api/login',
       data: {'username': username, 'password': password},
     );
     return res as Map<String, dynamic>;
