@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:convert';
 import '../lib/api/auth_api.dart';
 import '../lib/api/expense_api.dart';
+import '../lib/util/date_util.dart';
 
 Future<void> main() async {
   // login
@@ -129,16 +130,16 @@ Future<void> _searchExpense(ExpenseApi api, int userId) async {
     if (expenses.isEmpty) {
       print("No expenses found for item: $itemName");
     } else {
-      print("Expenses found:");
       for (var expense in expenses) {
         final id = expense['id'] ?? '';
         final item = expense['item'] ?? '';
         final paid = expense['paid'] ?? '';
         var date = expense['date'] ?? '';
-        if (date is String && date.endsWith('Z')) {
-          date = date.substring(0, date.length - 1);
-        }
-        print("$id. $item : ${paid}฿ : $date");
+
+         // ใช้ util format date
+        final formattedDate = DateUtil.formatDate(date);
+
+        print("$id. $item : ${paid}฿ : $formattedDate");
       }
     }
   } catch (e) {
