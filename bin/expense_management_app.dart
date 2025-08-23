@@ -97,7 +97,7 @@ Future<void> _mainLoop({required int userId, required String username}) async {
 
       case '5':
         // Call function to delete an expense
-        await _deleteExpense(api);
+        await _deleteExpense(api, userId);
         break;
 
       case '6':
@@ -151,4 +151,25 @@ Future<void> _searchExpense(ExpenseApi api, int userId) async {
 Future<void> _addNewExpense(ExpenseApi api, int userId) async {}
 
 // function to delete an expense
-Future<void> _deleteExpense(ExpenseApi api) async {}
+Future<void> _deleteExpense(ExpenseApi api, int userId) async {
+  print("==== Delete an item ====");
+  stdout.write("Item id: ");
+  String? idInput = stdin.readLineSync();
+  if (idInput == null || idInput.trim().isEmpty) {
+    print("Expense ID cannot be empty.");
+    return;
+  }
+  int? id = int.tryParse(idInput);
+  if (id == null) {
+    print("Invalid expense ID.");
+    return;
+  }
+
+  // userId must be passed in from main loop
+  try {
+    await api.remove(id, userId);
+    print("Deleted!");
+  } catch (e) {
+    print("Failed to delete expense: $e");
+  }
+}
