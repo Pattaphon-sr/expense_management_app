@@ -118,7 +118,7 @@ Future<void> _showTodayExpense(ExpenseApi api, int userId) async {}
 // function to search expense
 Future<void> _searchExpense(ExpenseApi api, int userId) async {
   // Search item in db by user id and name of item from expenses table in db
-  stdout.write("Enter item name to search: ");
+  stdout.write("Item to search: ");
   String? itemName = stdin.readLineSync();
   if (itemName == null || itemName.trim().isEmpty) {
     print("Item name cannot be empty.");
@@ -131,7 +131,14 @@ Future<void> _searchExpense(ExpenseApi api, int userId) async {
     } else {
       print("Expenses found:");
       for (var expense in expenses) {
-        print(expense);
+        final id = expense['id'] ?? '';
+        final item = expense['item'] ?? '';
+        final paid = expense['paid'] ?? '';
+        var date = expense['date'] ?? '';
+        if (date is String && date.endsWith('Z')) {
+          date = date.substring(0, date.length - 1);
+        }
+        print("$id. $item : ${paid}฿ : $date");
       }
     }
   } catch (e) {
