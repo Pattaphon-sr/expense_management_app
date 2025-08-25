@@ -125,7 +125,7 @@ Future<void> _showAllExpenses(ExpenseApi api, int userId) async {
       // ใช้ util format date
       final formattedDate = DateUtil.formatDate(date);
 
-      print("$id. $item : $paid : $formattedDate");
+      print("$id. $item : $paid฿ : $formattedDate");
       total += paid is int ? paid : int.tryParse(paid.toString()) ?? 0;
     }
     print("Total expenses = $total฿");
