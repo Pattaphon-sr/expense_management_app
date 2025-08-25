@@ -1,8 +1,17 @@
 import '../core/http/http_helpers.dart';
 import '../core/http/http_client.dart';
 
+
 class ExpenseApi {
   // 1) All expenses all(userId)  
+  Future<List<dynamic>> allExpenses({required int userId}) async {
+    final res = await httpc.requestJson(
+      '/api/expenses',
+      method: HttpMethod.get,
+      query: {'userId': userId.toString()},
+    );
+    return res as List<dynamic>;
+  }
 
   // 2) Today expense today(userId)
   
