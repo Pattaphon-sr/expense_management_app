@@ -136,7 +136,29 @@ Future<void> _showAllExpenses(ExpenseApi api, int userId) async {
 }
 
 // function to show today's expense
-Future<void> _showTodayExpense(ExpenseApi api, int userId) async {}
+Future<void> _showTodayExpense(ExpenseApi api, int userId) async {
+  try {
+    final expenses = await api.todayExpenses(userId: userId);
+    print("--------- Today's expenses ----------");
+    int total = 0;
+
+    for (var expense in expenses) {
+      final id = expense['id'] ?? '';
+      final item = expense['item'] ?? '';
+      final paid = expense['paid'] ?? 0;
+      final date = expense['date'] ?? '';
+      final formattedDate = DateUtil.formatDate(date);
+
+      print("$id. $item : $paid฿ : $formattedDate");
+      total += paid is int ? paid : int.tryParse(paid.toString()) ?? 0;
+    }
+
+    print("Total expenses today = $total฿");
+  } catch (e) {
+    print("Failed to fetch today's expenses: $e");
+  }
+  print("");
+}
 
 // function to search expense
 Future<void> _searchExpense(ExpenseApi api, int userId) async {
