@@ -114,7 +114,7 @@ Future<void> _mainLoop({required int userId, required String username}) async {
 Future<void> _showAllExpenses(ExpenseApi api, int userId) async {
   try {
     final expenses = await api.allExpenses(userId: userId);
-    print("--------- All expenses ----------");
+    print("------------- All expenses ----------");
     int total = 0;
     for (var expense in expenses) {
       final id = expense['id'] ?? '';
@@ -139,7 +139,7 @@ Future<void> _showAllExpenses(ExpenseApi api, int userId) async {
 Future<void> _showTodayExpense(ExpenseApi api, int userId) async {
   try {
     final expenses = await api.todayExpenses(userId: userId);
-    print("--------- Today's expenses ----------");
+    print("------------- Today's expenses ----------");
     int total = 0;
 
     for (var expense in expenses) {
@@ -153,7 +153,7 @@ Future<void> _showTodayExpense(ExpenseApi api, int userId) async {
       total += paid is int ? paid : int.tryParse(paid.toString()) ?? 0;
     }
 
-    print("Total expenses today = $total฿");
+    print("Total expenses = $total฿");
   } catch (e) {
     print("Failed to fetch today's expenses: $e");
   }
@@ -189,11 +189,12 @@ Future<void> _searchExpense(ExpenseApi api, int userId) async {
   } catch (e) {
     print("Error searching expenses: $e");
   }
+  print("");
 }
 
 // function to add new expense
 Future<void> _addNewExpense(ExpenseApi api, int userId) async {
-  print("==== Add new item ====");
+  print("===== Add new item =====");
   // item
   String? item;
   do {
@@ -225,11 +226,12 @@ Future<void> _addNewExpense(ExpenseApi api, int userId) async {
   } catch (e) {
     print("Failed to add expense: $e");
   }
+  print("");
 }
 
 // function to delete an expense
 Future<void> _deleteExpense(ExpenseApi api, int userId) async {
-  print("==== Delete an item ====");
+  print("===== Delete an item =====");
   stdout.write("Item id: ");
   String? idInput = stdin.readLineSync();
   if (idInput == null || idInput.trim().isEmpty) {
@@ -249,4 +251,5 @@ Future<void> _deleteExpense(ExpenseApi api, int userId) async {
   } catch (e) {
     print("Failed to delete expense: $e");
   }
+  print("");
 }
